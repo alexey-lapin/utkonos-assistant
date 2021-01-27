@@ -38,3 +38,8 @@ Note that:
 * send a message from the main extension to a content script
 * use web accessible resources to enable web pages to load packaged content
 * reload web pages
+
+prices:
+- main page
+- item page
+- search page

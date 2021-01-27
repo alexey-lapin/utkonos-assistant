@@ -22,14 +22,21 @@
         {
             "name": "Attach",
             "type": "firefox",
-            "request": "attach"
+            "request": "attach",
+            "port": 50715,
+            "pathMappings": [
+                {
+                    "url": "webpack:///",
+                    "path": "${workspaceFolder}\\src/"
+                }
+            ]
         },
         {
             "name": "Launch WebExtension",
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
-            "addonPath": "${workspaceFolder}"
+            "addonPath": "${workspaceFolder}/dist"
         }
     ]
 }
