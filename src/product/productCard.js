@@ -26,20 +26,21 @@ function setPricePerUnit(element, price) {
 export class ProductCardHandler {
 
     matches(element) {
-        const found = element.querySelector("product-card");
+        const found = element.localName === "product-card" || element.querySelector("product-card");
         return found;
     }
 
     handle(element) {
+        console.log(">> handle");
         let priceText = getProductPrice(element);
         let nameText = getProductName(element);
         let isPriceEligiable = isPriceEligeableForCalculation(priceText);
         let unit = isNameEligeableForCalculation(nameText);
         if (isPriceEligiable && unit) {
-            console.log(nameText + " | " + priceText + " | " + unit.quantity);
-            let price = parseFloat(priceText.split(/\s+/)[0].replace(",", "."));
+            let price = parseFloat(priceText.replaceAll(/\s/g, "").replace(",", ".").slice(0, -1));
             let pricePerUnit = price / unit.normalizedQuantity();
             let pricePerUnitText = pricePerUnit.toFixed(2) + " ₽/" + unit.normalizedUnit();
+            console.log(">> " + nameText + " | " + price + " | " + unit.quantity);
             setPricePerUnit(element, pricePerUnitText);
         }
     }
