@@ -1,0 +1,18 @@
+{
+    "include": ["./*.d.ts", "./src/**/*"],
+    "exclude": ["node_modules"],
+  
+    "compilerOptions": {
+      "strict": true,
+      "module": "esnext",
+      "lib": ["dom", "esnext"],
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "types": [  "node"],
+      "baseUrl": "src",
+      "sourceMap": true,
+    //   "paths": {
+    //     "@utkonos-web-ext/*": ["*/index"]
+    //   }
+    }
+  }

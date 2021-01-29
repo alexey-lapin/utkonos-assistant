@@ -14,6 +14,24 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
     },
+    resolve: {
+        extensions: ['.ts', '.js'],
+        alias: {
+          '@utkonos-web-ext/css': path.resolve(__dirname, './src/css/index'),
+        }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                  transpileOnly: true
+                },
+              },
+        ]
+    },
     plugins: [
         new ProgressBarPlugin(),
         new CopyPlugin({
