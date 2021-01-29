@@ -5,48 +5,39 @@ import {
 import { PricePerUnitDescriptor } from "../calculation";
 
 function getProductName(element) {
-  const newLocal = element.querySelector("utk-product-card-name span");
+  const newLocal = element.querySelector(".product-base-info_name");
   return newLocal.textContent.trim();
 }
 
 function getProductPrice(element) {
   return element
-    .querySelector("utk-product-price .product-price")
+    .querySelector("utk-product-price .product-sale-price")
     .textContent.trim();
 }
 
 function setPricePerUnit(element, price) {
   let basePriceContainer = element.querySelector(".product-base-price");
-  let productOldPrice = basePriceContainer.querySelector(".product-old-price");
   let pp = document.createElement("span");
   pp.title = price.describe();
   pp.textContent = price.pricePerUnitText();
-  if (productOldPrice) {
-    pp.style.marginRight = "5px";
-    productOldPrice.prepend(pp);
-  } else {
-    pp.style.marginTop = "-14px";
-    basePriceContainer.append(pp);
-  }
+  pp.style.marginRight = "5px";
+  basePriceContainer.append(pp);
 }
 
-export class ProductCardHandler {
+export class ProductPageHandler {
   matches(element) {
-    const found =
-      element.localName === "product-card" ||
-      element.querySelector("product-card");
+    const found = element.querySelector(".product-page_info-block");
     return found;
   }
 
   handle(element) {
-    console.log(">> handle");
+    console.log(">> handle pp");
     let priceText = getProductPrice(element);
     let nameText = getProductName(element);
     let isPriceEligiable = isPriceEligeableForCalculation(priceText);
     let unit = isNameEligeableForCalculation(nameText);
     if (isPriceEligiable && unit) {
       let pricePerUnitDescriptor = new PricePerUnitDescriptor(priceText, unit);
-      // console.log(">> " + nameText + " | " + price + " | " + unit.quantity);
       setPricePerUnit(element, pricePerUnitDescriptor);
     }
   }

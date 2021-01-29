@@ -26,17 +26,28 @@ export class QuantityDescriptor {
 }
 
 export class PricePerUnitDescriptor {
-  price: number;
-  quantity: number;
-  pricePerUnit: number;
+  private price: number;
+  private quantity: QuantityDescriptor;
+  private pricePerUnit: number;
 
-  constructor(price: number, quantity: number, pricePerUnit: number) {
-    this.price = price;
+  constructor(priceText: string, quantity: QuantityDescriptor) {
+    const priceNumber = priceText
+      .replaceAll(/\s/g, "")
+      .replace(",", ".")
+      .slice(0, -1);
+    this.price = parseFloat(priceNumber);
     this.quantity = quantity;
-    this.pricePerUnit = pricePerUnit;
+    this.pricePerUnit = this.price / quantity.normalizedQuantity();
   }
 
-  describe() {
-    return `${this.price.toFixed(2)} / ${this.quantity.toFixed(3)}`;
+  describe(): string {
+    const price = this.price.toFixed(2);
+    const quantity = this.quantity.normalizedQuantity().toFixed(3);
+    const unit = this.quantity.normalizedUnit();
+    return `${price}₽ / ${quantity}${unit}`;
+  }
+
+  pricePerUnitText(): string {
+    return this.pricePerUnit.toFixed(2) + " ₽/" + this.quantity.normalizedUnit();
   }
 }
