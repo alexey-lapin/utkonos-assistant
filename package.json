@@ -1,8 +1,7 @@
 {
-  "name": "utkonos-web-extension",
+  "name": "utkonos-assistant",
   "version": "0.1.0",
-  "description": "utkonos helper",
-  "main": "index.js",
+  "description": "Some useful functionality for Utkonos.ru the Web Supermarket",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,18 +10,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexey-lapin/utkonos-web-extension.git"
+    "url": "git+https://github.com/alexey-lapin/utkonos-assistant.git"
   },
   "keywords": [
     "utkonos",
-    "firefox"
+    "firefox",
+    "web-extension"
   ],
   "author": "Alexey Lapin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexey-lapin/utkonos-web-extension/issues"
+    "url": "https://github.com/alexey-lapin/utkonos-assistant/issues"
   },
-  "homepage": "https://github.com/alexey-lapin/utkonos-web-extension#readme",
+  "homepage": "https://github.com/alexey-lapin/utkonos-assistant#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",
     "cross-env": "^7.0.3",

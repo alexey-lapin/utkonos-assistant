@@ -1,38 +1,19 @@
 {
-  "description": "UUU",
+  "description": "Some useful functionality for Utkonos.ru the Web Supermarket",
   "manifest_version": 2,
-  "name": "Utkonos helper",
-  "version": "0.1",
-  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/beastify",
+  "name": "Utkonos Assistant",
+  "version": "*",
+  "homepage_url": "https://github.com/alexey-lapin/utkonos-assistant#readme",
   "icons": {
-    "48": "icons/beasts-48.png"
+    "16": "img/icon.svg",
+    "48": "img/icon.svg",
+    "128": "img/icon.svg"
   },
-  "permissions": [
-    "activeTab"
-  ],
-  "browser_action": {
-    "default_icon": "icons/beasts-32.png",
-    "theme_icons": [
-      {
-        "light": "icons/beasts-32-light.png",
-        "dark": "icons/beasts-32.png",
-        "size": 32
-      }
-    ],
-    "default_title": "Utkonos ",
-    "default_popup": "popup/popup.html"
-  },
-  "web_accessible_resources": [
-    "beasts/*.jpg"
-  ],
+  "permissions": ["activeTab"],
   "content_scripts": [
     {
-      "matches": [
-        "*://*.utkonos.ru/*"
-      ],
-      "js": [
-        "inject/index.js"
-      ]
+      "matches": ["*://*.utkonos.ru/*"],
+      "js": ["inject/index.js"]
     }
   ]
 }
