@@ -1,7 +1,4 @@
-import {
-  isNameEligeableForCalculation,
-  isPriceEligeableForCalculation,
-} from "../price";
+import { isNameEligeableForCalculation, isPriceEligeableForCalculation } from "../price";
 import { PricePerUnitDescriptor } from "../calculation";
 
 function getProductName(element) {
@@ -10,9 +7,7 @@ function getProductName(element) {
 }
 
 function getProductPrice(element) {
-  return element
-    .querySelector("utk-product-price .product-price")
-    .textContent.trim();
+  return element.querySelector("utk-product-price .product-price").textContent.trim();
 }
 
 function setPricePerUnit(element, price) {
@@ -32,9 +27,7 @@ function setPricePerUnit(element, price) {
 
 export class ProductCardHandler {
   matches(element) {
-    const found =
-      element.localName === "product-card" ||
-      element.querySelector("product-card");
+    const found = element.localName === "product-card" || element.querySelector("product-card");
     return found;
   }
 

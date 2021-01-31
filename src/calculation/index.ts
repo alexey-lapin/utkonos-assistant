@@ -31,10 +31,7 @@ export class PricePerUnitDescriptor {
   private pricePerUnit: number;
 
   constructor(priceText: string, quantity: QuantityDescriptor) {
-    const priceNumber = priceText
-      .replaceAll(/\s/g, "")
-      .replace(",", ".")
-      .slice(0, -1);
+    const priceNumber = priceText.replaceAll(/\s/g, "").replace(",", ".").slice(0, -1);
     this.price = parseFloat(priceNumber);
     this.quantity = quantity;
     this.pricePerUnit = this.price / quantity.normalizedQuantity();

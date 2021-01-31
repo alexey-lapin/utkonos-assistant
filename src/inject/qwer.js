@@ -1,5 +1,5 @@
 const f = function () {
-    console.log("ff!")
-}
+  console.log("ff!");
+};
 
-export default f
+export default f;

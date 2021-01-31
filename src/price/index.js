@@ -11,10 +11,7 @@ export function isNameEligeableForCalculation(nameText) {
   let packMatch = patternPack.exec(nameText);
   if (packMatch) {
     let count = parseInt(packMatch[1].trim());
-    return new QuantityDescriptor(
-      handleQuantity(packMatch[3]) * count,
-      packMatch[4]
-    );
+    return new QuantityDescriptor(handleQuantity(packMatch[3]) * count, packMatch[4]);
   }
   let itemMatch = patternItem.exec(nameText);
   if (itemMatch) {
