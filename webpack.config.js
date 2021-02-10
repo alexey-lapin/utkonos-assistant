@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const packageJson = require("./package.json");
+const webpack = require("webpack");
 
 module.exports = {
   devtool: "eval-cheap-module-source-map",
   context: __dirname + "/src",
   entry: {
-    "inject/index": "./inject/index.js",
+    "inject/index": "./inject/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -29,6 +31,9 @@ module.exports = {
     ],
   },
   plugins: [
+    // new webpack.DefinePlugin({
+      // global: 'window',
+    // }),
     new ProgressBarPlugin(),
     new CopyPlugin({
       patterns: [
@@ -39,7 +44,7 @@ module.exports = {
         {
           from: "extension/manifest.json",
           to: "manifest.json",
-          transform: (content) => {
+          transform: content => {
             const jsonContent = JSON.parse(content);
             jsonContent.version = packageJson.version;
             jsonContent.description = packageJson.description;
