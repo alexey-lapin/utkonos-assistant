@@ -23,7 +23,7 @@
             "name": "Attach",
             "type": "firefox",
             "request": "attach",
-            "port": 49818,
+            "port": 54663,
             "pathMappings": [
                 {
                     "url": "webpack-internal:///./",

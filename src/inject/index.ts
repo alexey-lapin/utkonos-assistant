@@ -15,8 +15,10 @@ declare let window: CustomWindow;
   const observer = new MutationObserver(mutations => {
     for (const mutation of mutations) {
       mutation.addedNodes.forEach(addedNode => {
-        if (addedNode instanceof Element 
-          && (addedNode.nodeName === "PRODUCT-CARD" || addedNode.nodeName === "DIV" )) {
+        if (
+          addedNode instanceof HTMLElement &&
+          (addedNode.nodeName === "PRODUCT-CARD" || addedNode.nodeName === "DIV")
+        ) {
           if (productCardHandler.matches(addedNode)) {
             productCardHandler.handle(addedNode);
           } else if (productPageHandler.matches(addedNode)) {

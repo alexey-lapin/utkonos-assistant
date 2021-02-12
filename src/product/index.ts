@@ -3,7 +3,7 @@ export function selectQuery(parent: Element | Document, selector: string): Eleme
 }
 
 export function selectQueryOrThrow(parent: Element | Document, selector: string): Element {
-  return selectQuery(parent, selector) ?? throwing(`Selector ${selector} didn't match any elements.`);
+  return selectQuery(parent, selector) ?? throwing(`failed to query '${selector}'`);
 }
 
 export function throwing<T>(message: string): T {
