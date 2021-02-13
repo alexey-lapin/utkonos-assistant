@@ -1,7 +1,7 @@
 import { QuantityDescriptor } from "../calculation/QuantityDescriptor";
 
 const patternItem = /\s+([0-9.]+)\s*(г|кг|мл|л|шт|штук|штука|штуки)$/;
-const patternPack = /\s*(\d+)\s*(штук(?:и)? по)\s*([0-9.]+)\s*(г|кг|мл|л)$/;
+const patternPack = /\s*(\d+)\s*(\S*? по)\s*([0-9.]+)\s*(г|кг|мл|л)$/;
 
 export function isPriceEligeableForCalculation(priceText: string): boolean {
   return !priceText.includes("/");

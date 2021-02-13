@@ -1,6 +1,6 @@
-import { getQuantityDescriptor, isPriceEligeableForCalculation } from "../price";
 import { PricePerUnitAdder } from "./PricePerUnitAdder";
 import { PricePerUnitDescriptor } from "../calculation/PricePerUnitDescriptor";
+import { selectQuery } from "./index";
 
 export const PRICE_PER_UNIT_CLASS = "utkonos-assistant-price-per-unit";
 
@@ -19,6 +19,10 @@ export abstract class AbstractPricePerUnitAdder implements PricePerUnitAdder {
     return pricePerUnitContainer;
   }
 
+  protected removePricePerUnitContainer(element: HTMLElement): void {
+    selectQuery(element, `.${PRICE_PER_UNIT_CLASS}`)?.remove();
+  }
+
   matches(element: HTMLElement): boolean {
     return element.querySelector(`.${PRICE_PER_UNIT_CLASS}`) == null;
   }
@@ -26,10 +30,8 @@ export abstract class AbstractPricePerUnitAdder implements PricePerUnitAdder {
   handle(element: HTMLElement): void {
     const priceText = this.getProductPrice(element);
     const nameText = this.getProductName(element);
-    const isPriceEligiable = isPriceEligeableForCalculation(priceText);
-    const quantityDescriptor = getQuantityDescriptor(nameText);
-    if (isPriceEligiable && quantityDescriptor != null) {
-      const pricePerUnitDescriptor = new PricePerUnitDescriptor(priceText, quantityDescriptor);
+    const pricePerUnitDescriptor = PricePerUnitDescriptor.create(nameText, priceText);
+    if (pricePerUnitDescriptor != null) {
       this.setPricePerUnit(element, pricePerUnitDescriptor);
     }
   }

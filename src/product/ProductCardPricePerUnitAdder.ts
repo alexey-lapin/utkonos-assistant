@@ -2,6 +2,8 @@ import { AbstractPricePerUnitAdder } from "./AbstractPricePerUnitAdder";
 import { PricePerUnitDescriptor } from "../calculation/PricePerUnitDescriptor";
 import { selectQuery, selectQueryOrThrow, throwing } from "./index";
 
+const CONTAINER_SELECTOR = "product-card";
+
 export class ProductCardPricePerUnitAdder extends AbstractPricePerUnitAdder {
   getProductName(element: HTMLElement): string {
     const productNameElement = selectQueryOrThrow(element, "utk-product-card-name span");
@@ -14,22 +16,53 @@ export class ProductCardPricePerUnitAdder extends AbstractPricePerUnitAdder {
   }
 
   setPricePerUnit(element: HTMLElement, pricePerUnitDescriptor: PricePerUnitDescriptor): void {
-    const basePriceContainer = selectQueryOrThrow(element, ".product-base-price");
-    const productOldPrice = selectQuery(basePriceContainer, ".product-old-price");
-
     const pricePerUnitContainer = this.createPricePerUnitContainer(pricePerUnitDescriptor);
-    if (productOldPrice == null) {
+    const basePriceContainer = selectQueryOrThrow(element, ".product-base-price");
+    const oldPriceContainer = selectQuery(basePriceContainer, ".product-old-price");
+    this.attachPricePerUnitContainer(pricePerUnitContainer, basePriceContainer, oldPriceContainer);
+  }
+
+  private attachPricePerUnitContainer(
+    pricePerUnitContainer: HTMLElement,
+    basePriceContainer: Element,
+    oldPriceContainer: Element | null
+  ): void {
+    if (oldPriceContainer == null) {
       pricePerUnitContainer.style.marginTop = "-14px";
       basePriceContainer.append(pricePerUnitContainer);
     } else {
       pricePerUnitContainer.style.marginRight = "5px";
-      productOldPrice.prepend(pricePerUnitContainer);
+      oldPriceContainer.prepend(pricePerUnitContainer);
     }
   }
 
   matches(element: HTMLElement): boolean {
     return (
-      (element.localName === "product-card" || element.querySelector("product-card") !== null) && super.matches(element)
+      (element.localName === CONTAINER_SELECTOR || element.querySelector(CONTAINER_SELECTOR) !== null) &&
+      super.matches(element)
     );
+  }
+
+  handle(element: HTMLElement): void {
+    super.handle(element);
+    this.handleVariants(element);
+  }
+
+  private handleVariants(element: HTMLElement) {
+    const variantsContainer = selectQuery(element, "product-variants");
+    if (variantsContainer != null) {
+      this.addVariantListeners(element);
+    }
+  }
+
+  private addVariantListeners(element: HTMLElement): void {
+    const variants = element.querySelectorAll(".product-listing-variants_item-radio");
+    variants.forEach((variant: Element) => {
+      variant.addEventListener("change", (event: Event) => {
+        const productContainer = (event.target as HTMLElement).closest(CONTAINER_SELECTOR) as HTMLElement;
+        this.removePricePerUnitContainer(productContainer);
+        super.handle(productContainer);
+      });
+    });
   }
 }
