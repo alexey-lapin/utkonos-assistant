@@ -3,10 +3,9 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const packageJson = require("./package.json");
-const webpack = require("webpack");
 
-module.exports = {
-  devtool: "eval-cheap-module-source-map",
+const config = {
+  mode: process.env.NODE_ENV,
   context: __dirname + "/src",
   entry: {
     "inject/index": "./inject/index.ts",
@@ -31,9 +30,6 @@ module.exports = {
     ],
   },
   plugins: [
-    // new webpack.DefinePlugin({
-      // global: 'window',
-    // }),
     new ProgressBarPlugin(),
     new CopyPlugin({
       patterns: [
@@ -56,3 +52,9 @@ module.exports = {
     }),
   ],
 };
+
+if (config.mode === "development") {
+  config.devtool = "eval-cheap-module-source-map";
+}
+
+module.exports = config;
